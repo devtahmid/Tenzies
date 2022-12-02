@@ -24,31 +24,37 @@ export default function App() {
   })
 
   function handleButtonClick() {
-    if (gameStatus === "ongoing")
+    if (gameStatus === "ongoing") {
+      setCount((oldCount) => oldCount + 1)
       randomiseDice()
+    }
     else {
       setDice((oldDice) => {
         return oldDice.map((die) => ({ ...die, selected: false }))
       })
       setCount(0)
     }
-
   }
 
-  function randomiseDice() {
-
-    if (gameStatus === "ongoing") {
-      setCount((oldCount) => oldCount + 1)
-      const newDice = dice.map((oldDie) => {
-
-        let randomNumber = Math.floor((Math.random() * 6) + 1);
-        while (randomNumber === oldDie.value)
-          randomNumber = Math.floor((Math.random() * 6) + 1);
-
-        return oldDie.selected ? oldDie : { ...oldDie, value: randomNumber }
-      })
-      setDice(newDice)
+  React.useEffect(function () {
+    //function will be called when gamestatus changes form ongoing to ended, or ended to ongoing
+    if (gameStatus == "ongoing") {
+      randomiseDice()
+      //randomise after restart
     }
+
+  }, [gameStatus])
+
+  function randomiseDice() {
+    const newDice = dice.map((oldDie) => {
+
+      let randomNumber = Math.floor((Math.random() * 6) + 1);
+      while (randomNumber === oldDie.value)
+        randomNumber = Math.floor((Math.random() * 6) + 1);
+
+      return oldDie.selected ? oldDie : { ...oldDie, value: randomNumber }
+    })
+    setDice(newDice)
 
   }
 
