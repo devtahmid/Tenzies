@@ -1,6 +1,7 @@
 # Tenzies
 Get all dices same with least number of rolls
-Hosted at - 
+
+Hosted at - https://devtahmid.github.io/Tenzies/
 
 
 First view
